@@ -9,3 +9,9 @@ spring:
 
   profiles:
     active: local
+
+ed-app:
+  emotion-recognition:
+    video-path: ${video-path}
+
+video-path: -1

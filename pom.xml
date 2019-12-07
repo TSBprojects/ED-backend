@@ -111,7 +111,7 @@
             <dependencies>
                 <dependency>
                     <groupId>ru.sstu.vak.emotionRecognition</groupId>
-                    <artifactId>identify-emotion-cpu-win-x86_64</artifactId>
+                    <artifactId>identify-emotion-win-x86_64-cpu</artifactId>
                     <version>1.0</version>
                 </dependency>
             </dependencies>
@@ -124,7 +124,7 @@
             <dependencies>
                 <dependency>
                     <groupId>ru.sstu.vak.emotionRecognition</groupId>
-                    <artifactId>identify-emotion-cpu-linux-x86_64</artifactId>
+                    <artifactId>identify-emotion-linux-x86_64-cpu</artifactId>
                     <version>1.0</version>
                 </dependency>
             </dependencies>

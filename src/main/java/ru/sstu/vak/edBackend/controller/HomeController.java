@@ -60,12 +60,12 @@ public class HomeController {
     }
 
     @GetMapping("/currentEmotion")
-    public Object test() {
+    public Object currentEmotion() {
         return currentFrameInfo != null ? currentFrameInfo : "Video not recording.";
     }
 
     @PostMapping("/recognizeImage")
-    public Map<String, String> recognize(@RequestPart(name = "img") MultipartFile image) throws Exception {
+    public Map<String, String> recognizeImage(@RequestPart(name = "img") MultipartFile image) throws Exception {
 
         InputStream in = new ByteArrayInputStream(image.getBytes());
         BufferedImage processedImage = emotionRecognizer.processImage(ImageIO.read(in)).getProcessedImage();

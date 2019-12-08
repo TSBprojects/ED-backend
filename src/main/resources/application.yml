@@ -13,5 +13,11 @@ spring:
 ed-app:
   emotion-recognition:
     video-path: ${video-path}
+    model-path: ${model-path}
+    log-emotion: ${log-emotion}
 
 video-path: -1
+
+model-path: cnnModel.bin
+
+log-emotion: false

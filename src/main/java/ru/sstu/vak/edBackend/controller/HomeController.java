@@ -3,10 +3,7 @@ package ru.sstu.vak.edBackend.controller;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.sstu.vak.emotionRecognition.identifyEmotion.dataInfo.impl.FrameInfo;
 import ru.sstu.vak.emotionRecognition.identifyEmotion.emotionRecognizer.EmotionRecognizer;
@@ -22,44 +19,52 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/api")
 public class HomeController {
 
     @Value("${ed-app.emotion-recognition.video-path}")
     private String videoPath;
 
-    private FrameInfo currentFrameInfo;
+    @Value("${ed-app.emotion-recognition.model-path}")
+    private String modelPath;
+
+    @Value("${ed-app.emotion-recognition.log-emotion}")
+    private boolean logEmotion;
+
 
     private Path userImagesFolder;
     private EmotionRecognizer emotionRecognizer;
+    private FrameInfo currentFrameInfo;
 
     public HomeController() {
         File userImages = new File("userImages");
         userImages.mkdir();
         userImagesFolder = userImages.toPath();
+        initExit();
     }
 
     @PostConstruct
     public void postConstructor() throws IOException {
-        emotionRecognizer = new EmotionRecognizerBase("cnnModel.bin");
+        emotionRecognizer = new EmotionRecognizerBase(modelPath);
         if (!videoPath.equals("-1")) {
             emotionRecognizer.processVideo(videoPath, frameInfo -> {
                 this.currentFrameInfo = frameInfo;
-                if (!frameInfo.getVideoFaces().isEmpty()) {
-                    System.out.println(frameInfo.getVideoFaces().get(0).getEmotion());
+                if (!frameInfo.getVideoFaces().isEmpty() && logEmotion) {
+                    System.out.println(frameInfo.getVideoFaces().toString());
                 }
-                if (frameInfo.getFrameIndex() % 100 == 0) {
+                if (frameInfo.getFrameIndex() % 50 == 0) {
                     System.gc();
                 }
             });
         }
     }
 
-    @GetMapping("/api/currentEmotion")
-    public FrameInfo test() {
-        return currentFrameInfo;
+    @GetMapping("/currentEmotion")
+    public Object test() {
+        return currentFrameInfo != null ? currentFrameInfo : "Video not recording.";
     }
 
-    @PostMapping("/api/recognize")
+    @PostMapping("/recognizeImage")
     public Map<String, String> recognize(@RequestPart(name = "img") MultipartFile image) throws Exception {
 
         InputStream in = new ByteArrayInputStream(image.getBytes());
@@ -91,4 +96,12 @@ public class HomeController {
         return jsonMap;
     }
 
+
+    private void initExit() {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            if (emotionRecognizer != null && emotionRecognizer.isRun()) {
+                emotionRecognizer.stop();
+            }
+        }));
+    }
 }

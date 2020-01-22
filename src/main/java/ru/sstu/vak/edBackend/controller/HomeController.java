@@ -105,7 +105,6 @@ public class HomeController {
         return jsonMap;
     }
 
-
     private void initExit() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             if (emotionRecognizer != null && emotionRecognizer.isRun()) {

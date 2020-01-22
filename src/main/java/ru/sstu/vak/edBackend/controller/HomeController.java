@@ -5,6 +5,9 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.sstu.vak.edBackend.dto.EmotionResponse;
+import ru.sstu.vak.edBackend.dto.FaceResponse;
+import ru.sstu.vak.emotionRecognition.identifyEmotion.dataFace.impl.VideoFace;
 import ru.sstu.vak.emotionRecognition.identifyEmotion.dataInfo.impl.FrameInfo;
 import ru.sstu.vak.emotionRecognition.identifyEmotion.emotionRecognizer.EmotionRecognizer;
 import ru.sstu.vak.emotionRecognition.identifyEmotion.emotionRecognizer.impl.EmotionRecognizerBase;
@@ -14,9 +17,8 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Path;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -60,8 +62,15 @@ public class HomeController {
     }
 
     @GetMapping("/currentEmotion")
-    public Object currentEmotion() {
-        return currentFrameInfo != null ? currentFrameInfo : "Video not recording.";
+    public Object currentEmotion(@RequestParam boolean json) {
+        if (currentFrameInfo != null) {
+            List<VideoFace> videoFaceList = currentFrameInfo.getVideoFaces();
+            return json ? videoFaceList.stream().map(FaceResponse::new).collect(Collectors.toList()) :
+                    videoFaceList.stream()
+                            .flatMap(videoFace -> new FaceResponse(videoFace).getEmotions().stream())
+                            .collect(Collectors.toMap(EmotionResponse::getEmotionId, EmotionResponse::getProbability));
+        }
+        return "Video not recording.";
     }
 
     @PostMapping("/recognizeImage")

@@ -11,7 +11,7 @@ public class EDBackendApplication extends SpringBootServletInitializer {
 
     private static final String APP_INFO =
                     "Available endpoints:\n" +
-                    "\t(GET)/api/currentEmotion\n" +
+                    "\t(GET)/api/currentEmotion?json=false\n" +
                     "\t(POST)/api/recognizeImage\n" +
                     "Available params:\n" +
                     "\t--model-path\n" +

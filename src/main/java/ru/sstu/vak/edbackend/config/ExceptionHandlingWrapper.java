@@ -1,13 +1,12 @@
-package ru.sstu.vak.edBackend.config;
+package ru.sstu.vak.edbackend.config;
 
+import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.sstu.vak.edBackend.dto.ExceptionResponse;
-
-import javax.servlet.http.HttpServletRequest;
+import ru.sstu.vak.edbackend.dto.ExceptionResponse;
 
 @RestControllerAdvice
 @Slf4j

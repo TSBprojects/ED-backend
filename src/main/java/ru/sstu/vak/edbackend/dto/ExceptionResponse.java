@@ -1,4 +1,4 @@
-package ru.sstu.vak.edBackend.dto;
+package ru.sstu.vak.edbackend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

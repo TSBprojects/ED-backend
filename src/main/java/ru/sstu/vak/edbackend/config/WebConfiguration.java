@@ -1,4 +1,4 @@
-package ru.sstu.vak.edBackend.config;
+package ru.sstu.vak.edbackend.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

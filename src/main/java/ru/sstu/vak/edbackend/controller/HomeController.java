@@ -1,24 +1,35 @@
-package ru.sstu.vak.edBackend.controller;
+package ru.sstu.vak.edbackend.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
+import javax.imageio.ImageIO;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import ru.sstu.vak.edBackend.dto.EmotionResponse;
-import ru.sstu.vak.edBackend.dto.FaceResponse;
-import ru.sstu.vak.emotionRecognition.identifyEmotion.dataFace.impl.VideoFace;
-import ru.sstu.vak.emotionRecognition.identifyEmotion.dataInfo.impl.FrameInfo;
-import ru.sstu.vak.emotionRecognition.identifyEmotion.emotionRecognizer.EmotionRecognizer;
-import ru.sstu.vak.emotionRecognition.identifyEmotion.emotionRecognizer.impl.EmotionRecognizerBase;
-
-import javax.annotation.PostConstruct;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.nio.file.Path;
-import java.util.*;
-import java.util.stream.Collectors;
+import ru.sstu.vak.edbackend.dto.EmotionResponse;
+import ru.sstu.vak.edbackend.dto.FaceResponse;
+import ru.sstu.vak.emotionrecognition.identifyemotion.dataface.impl.VideoFace;
+import ru.sstu.vak.emotionrecognition.identifyemotion.datainfo.FrameInfo;
+import ru.sstu.vak.emotionrecognition.identifyemotion.emotionrecognizer.EmotionRecognizer;
+import ru.sstu.vak.emotionrecognition.identifyemotion.emotionrecognizer.impl.EmotionRecognizerBase;
 
 @RestController
 @RequestMapping("/api")

@@ -1,10 +1,8 @@
-package ru.sstu.vak.edBackend;
+package ru.sstu.vak.edbackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-
-import javax.annotation.PostConstruct;
 
 @SpringBootApplication
 public class EDBackendApplication extends SpringBootServletInitializer {

@@ -1,8 +1,4 @@
-package ru.sstu.vak.edBackend.dto;
-
-import lombok.Data;
-import ru.sstu.vak.emotionRecognition.common.Emotion;
-import ru.sstu.vak.emotionRecognition.identifyEmotion.dataFace.impl.VideoFace;
+package ru.sstu.vak.edbackend.dto;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +6,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
+import lombok.Data;
+import ru.sstu.vak.emotionrecognition.common.Emotion;
+import ru.sstu.vak.emotionrecognition.identifyemotion.dataface.impl.VideoFace;
 
 @Data
 public class FaceResponse {
